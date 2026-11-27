@@ -5,6 +5,7 @@ class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
 
     database_url: str
+    test_database_url: str | None = None
     debug: bool = False
     timezone: str = "Asia/Bangkok"
 
