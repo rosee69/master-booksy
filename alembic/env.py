@@ -7,9 +7,13 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from master_booksy.adapters.database.base import Base
 from master_booksy.adapters.database.models import (
+    appointment_model,  # noqa: F401
     client_model,  # noqa: F401
     master_model,  # noqa: F401
+    master_service_model,  # noqa: F401
+    schedule_model,  # noqa: F401
     service_model,  # noqa: F401
+    time_off_model,  # noqa: F401
     user_model,  # noqa: F401
 )
 from master_booksy.config import settings

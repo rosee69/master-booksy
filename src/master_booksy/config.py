@@ -6,6 +6,7 @@ class Settings(BaseSettings):
 
     database_url: str
     debug: bool = False
+    timezone: str = "Asia/Bangkok"
 
     model_config = SettingsConfigDict(
         env_file=".env",

@@ -1,10 +1,19 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 from uuid import UUID, uuid4
 
 from sqlalchemy import Boolean, Integer, String, Text
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from master_booksy.adapters.database.base import Base
+from master_booksy.adapters.database.models.master_service_model import (
+    master_services,
+)
+
+if TYPE_CHECKING:
+    from master_booksy.adapters.database.models.master_model import MasterModel
 
 
 class ServiceModel(Base):
@@ -37,4 +46,9 @@ class ServiceModel(Base):
         Boolean,
         default=True,
         nullable=False,
+    )
+
+    masters: Mapped[list[MasterModel]] = relationship(
+        secondary=master_services,
+        back_populates="services",
     )
