@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from datetime import datetime
-from decimal import Decimal
 from uuid import UUID
 
 from master_booksy.domain.enums.appointment_status import AppointmentStatus
@@ -17,7 +16,7 @@ class Appointment:
     starts_at: datetime
     ends_at: datetime
     status: AppointmentStatus = AppointmentStatus.PENDING
-    price_at_booking: Decimal = Decimal("0")
+    price_at_booking: int = 0
 
     def __post_init__(self) -> None:
         if self.starts_at >= self.ends_at:
@@ -29,5 +28,5 @@ class Appointment:
         if self.starts_at.utcoffset() is None or self.ends_at.utcoffset() is None:
             raise ValueError("Appointment datetimes must have a valid UTC offset.")
 
-        if not self.price_at_booking.is_finite() or self.price_at_booking < Decimal("0"):
-            raise ValueError("Appointment price must be a finite non-negative value.")
+        if self.price_at_booking < 0:
+            raise ValueError("Appointment price must be non-negative.")
