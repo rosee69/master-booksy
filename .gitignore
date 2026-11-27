@@ -24,3 +24,7 @@ env/
 .idea/
 .vscode/
 
+# Coverage reports
+.coverage
+htmlcov/
+
