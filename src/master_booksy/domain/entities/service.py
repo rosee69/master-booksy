@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from decimal import Decimal
 from uuid import UUID
 
 
@@ -10,16 +9,14 @@ class Service:
     id: UUID
     name: str
     duration_minutes: int
-    price: Decimal
+    price: int
     description: str | None = None
     is_active: bool = True
 
     def __post_init__(self) -> None:
         if not self.name.strip():
             raise ValueError("Service name cannot be empty.")
-
         if self.duration_minutes <= 0:
             raise ValueError("Service duration must be positive.")
-
-        if not self.price.is_finite() or self.price < Decimal("0"):
-            raise ValueError("Service price must be a finite non-negative value.")
+        if self.price < 0:
+            raise ValueError("Service price cannot be negative.")

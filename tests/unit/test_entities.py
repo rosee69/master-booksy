@@ -1,3 +1,4 @@
+
 from dataclasses import FrozenInstanceError
 from datetime import UTC, datetime, time
 from decimal import Decimal
@@ -52,26 +53,24 @@ def test_service_creation() -> None:
         id=uuid4(),
         name="Luxury Haircut & Styling",
         duration_minutes=60,
-        price=Decimal("120.00"),
+        price=120,
     )
 
     assert service.duration_minutes == 60
-    assert service.price == Decimal("120.00")
+    assert service.price == 120
 
 
 @pytest.mark.parametrize(
     ("duration", "price"),
     [
-        (0, Decimal("120.00")),
-        (-30, Decimal("120.00")),
-        (60, Decimal("-10.00")),
-        (60, Decimal("NaN")),
-        (60, Decimal("Infinity")),
+        (0, 120),
+        (-30, 120),
+        (60, -10),
     ],
 )
 def test_service_rejects_invalid_values(
     duration: int,
-    price: Decimal,
+    price: int,
 ) -> None:
     with pytest.raises(ValueError):
         Service(
@@ -166,7 +165,6 @@ def test_appointment_rejects_invalid_period() -> None:
             starts_at=datetime(2026, 12, 2, 6, 0, tzinfo=UTC),
             ends_at=datetime(2026, 12, 2, 5, 0, tzinfo=UTC),
         )
-
 
 
 def test_domain_entities_are_immutable() -> None:
