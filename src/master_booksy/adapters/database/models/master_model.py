@@ -55,10 +55,10 @@ class MasterModel(Base):
         back_populates="masters",
     )
     schedules: Mapped[list[ScheduleModel]] = relationship(
-    back_populates="master",
-    cascade="all, delete-orphan",
+        back_populates="master",
+        cascade="all, delete-orphan",
     )
     time_offs: Mapped[list[TimeOffModel]] = relationship(
-    back_populates="master",
-    cascade="all, delete-orphan",
-)
+        back_populates="master",
+        cascade="all, delete-orphan",
+    )

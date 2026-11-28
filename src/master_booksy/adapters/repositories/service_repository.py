@@ -41,9 +41,7 @@ class ServiceRepository(BaseRepository):
 
     async def get_by_master_id(self, master_id: UUID) -> list[Service]:
         result = await self.session.execute(
-            select(ServiceModel).where(
-                ServiceModel.masters.any(id=master_id)
-            )
+            select(ServiceModel).where(ServiceModel.masters.any(id=master_id))
         )
         service_models = result.scalars().all()
 

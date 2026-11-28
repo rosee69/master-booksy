@@ -19,7 +19,6 @@ from master_booksy.domain.enums.user_role import UserRole
 BANGKOK_TZ = ZoneInfo("Asia/Bangkok")
 
 
-
 async def create_test_master(
     db_session,
     email: str = "master@example.com",
@@ -50,12 +49,8 @@ async def create_test_time_off(
     time_off = TimeOff(
         id=uuid4(),
         master_id=master_id,
-        starts_at=starts_at or datetime(
-            2026, 8, 10, 9, 0, tzinfo=BANGKOK_TZ
-        ),
-        ends_at=ends_at or datetime(
-            2026, 8, 12, 18, 0, tzinfo=BANGKOK_TZ
-        ),
+        starts_at=starts_at or datetime(2026, 8, 10, 9, 0, tzinfo=BANGKOK_TZ),
+        ends_at=ends_at or datetime(2026, 8, 12, 18, 0, tzinfo=BANGKOK_TZ),
         reason=reason,
     )
     return await repository.create(time_off)
@@ -98,12 +93,8 @@ async def test_get_time_offs_by_master_id(db_session):
     second_time_off = await create_test_time_off(
         repository,
         master.id,
-        starts_at=datetime(
-            2026, 8, 20, 9, 0, tzinfo=BANGKOK_TZ
-        ),
-        ends_at=datetime(
-            2026, 8, 22, 18, 0, tzinfo=BANGKOK_TZ
-        ),
+        starts_at=datetime(2026, 8, 20, 9, 0, tzinfo=BANGKOK_TZ),
+        ends_at=datetime(2026, 8, 22, 18, 0, tzinfo=BANGKOK_TZ),
         reason="Personal leave",
     )
 
@@ -124,12 +115,8 @@ async def test_get_time_offs_by_master_and_period(db_session):
     await create_test_time_off(
         repository,
         master.id,
-        starts_at=datetime(
-            2026, 8, 20, 9, 0, tzinfo=BANGKOK_TZ
-        ),
-        ends_at=datetime(
-            2026, 8, 22, 18, 0, tzinfo=BANGKOK_TZ
-        ),
+        starts_at=datetime(2026, 8, 20, 9, 0, tzinfo=BANGKOK_TZ),
+        ends_at=datetime(2026, 8, 22, 18, 0, tzinfo=BANGKOK_TZ),
     )
 
     time_offs = await repository.get_by_master_and_period(
@@ -150,12 +137,8 @@ async def test_update_time_off(db_session):
     updated_time_off = TimeOff(
         id=time_off.id,
         master_id=master.id,
-        starts_at=datetime(
-            2026, 8, 15, 9, 0, tzinfo=BANGKOK_TZ
-        ),
-        ends_at=datetime(
-            2026, 8, 17, 18, 0, tzinfo=BANGKOK_TZ
-        ),
+        starts_at=datetime(2026, 8, 15, 9, 0, tzinfo=BANGKOK_TZ),
+        ends_at=datetime(2026, 8, 17, 18, 0, tzinfo=BANGKOK_TZ),
         reason="Updated vacation",
     )
 
@@ -164,12 +147,8 @@ async def test_update_time_off(db_session):
     missing_time_off = TimeOff(
         id=uuid4(),
         master_id=master.id,
-        starts_at=datetime(
-            2026, 8, 15, 9, 0, tzinfo=BANGKOK_TZ
-        ),
-        ends_at=datetime(
-            2026, 8, 17, 18, 0, tzinfo=BANGKOK_TZ
-        ),
+        starts_at=datetime(2026, 8, 15, 9, 0, tzinfo=BANGKOK_TZ),
+        ends_at=datetime(2026, 8, 17, 18, 0, tzinfo=BANGKOK_TZ),
     )
     missing_result = await repository.update(missing_time_off)
 
@@ -196,6 +175,7 @@ async def test_delete_time_off_returns_false_when_not_found(db_session):
     result = await repository.delete(uuid4())
 
     assert result is False
+
 
 @pytest.mark.asyncio
 async def test_get_time_offs_by_master_and_period_returns_empty_list(

@@ -15,9 +15,7 @@ class ClientRepository(BaseRepository):
         super().__init__(session)
 
     async def get_by_id(self, client_id: UUID) -> Client | None:
-        result = await self.session.execute(
-            select(ClientModel).where(ClientModel.id == client_id)
-        )
+        result = await self.session.execute(select(ClientModel).where(ClientModel.id == client_id))
         client_model = result.scalar_one_or_none()
 
         if client_model is None:

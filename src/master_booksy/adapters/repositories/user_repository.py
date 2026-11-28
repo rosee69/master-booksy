@@ -15,9 +15,7 @@ class UserRepository(BaseRepository):
         super().__init__(session)
 
     async def get_by_id(self, user_id: UUID) -> User | None:
-        result = await self.session.execute(
-            select(UserModel).where(UserModel.id == user_id)
-        )
+        result = await self.session.execute(select(UserModel).where(UserModel.id == user_id))
         user_model = result.scalar_one_or_none()
 
         if user_model is None:
@@ -26,9 +24,7 @@ class UserRepository(BaseRepository):
         return self._to_entity(user_model)
 
     async def get_by_email(self, email: str) -> User | None:
-        result = await self.session.execute(
-            select(UserModel).where(UserModel.email == email)
-        )
+        result = await self.session.execute(select(UserModel).where(UserModel.email == email))
         user_model = result.scalar_one_or_none()
 
         if user_model is None:
