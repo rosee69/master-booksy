@@ -21,9 +21,7 @@ class AppointmentRepository(BaseRepository):
     async def get_by_id(self, appointment_id: UUID) -> Appointment | None:
         """Get an appointment by its ID."""
         result = await self.session.execute(
-            select(AppointmentModel).where(
-                AppointmentModel.id == appointment_id
-            )
+            select(AppointmentModel).where(AppointmentModel.id == appointment_id)
         )
         model = result.scalar_one_or_none()
 
@@ -96,13 +94,9 @@ class AppointmentRepository(BaseRepository):
         )
 
         if exclude_appointment_id is not None:
-            query = query.where(
-                AppointmentModel.id != exclude_appointment_id
-            )
+            query = query.where(AppointmentModel.id != exclude_appointment_id)
 
-        result = await self.session.execute(
-            query.order_by(AppointmentModel.starts_at)
-        )
+        result = await self.session.execute(query.order_by(AppointmentModel.starts_at))
         models = result.scalars().all()
 
         return [self._to_entity(model) for model in models]
@@ -131,9 +125,7 @@ class AppointmentRepository(BaseRepository):
     ) -> Appointment | None:
         """Update an existing appointment."""
         result = await self.session.execute(
-            select(AppointmentModel).where(
-                AppointmentModel.id == appointment.id
-            )
+            select(AppointmentModel).where(AppointmentModel.id == appointment.id)
         )
         model = result.scalar_one_or_none()
 

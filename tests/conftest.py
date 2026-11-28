@@ -27,9 +27,7 @@ async def test_engine():
         raise RuntimeError("TEST_DATABASE_URL is not configured.")
 
     if "master_booksy_test" not in settings.test_database_url:
-        raise RuntimeError(
-            "Tests must use the dedicated master_booksy_test database."
-        )
+        raise RuntimeError("Tests must use the dedicated master_booksy_test database.")
 
     engine = create_async_engine(
         settings.test_database_url,

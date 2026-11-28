@@ -81,9 +81,7 @@ async def create_test_appointment(
     starts_at=None,
     status=AppointmentStatus.PENDING,
 ):
-    starts_at = starts_at or datetime(
-        2026, 8, 10, 10, 0, tzinfo=BANGKOK_TZ
-    )
+    starts_at = starts_at or datetime(2026, 8, 10, 10, 0, tzinfo=BANGKOK_TZ)
 
     return await repository.create(
         Appointment(
@@ -127,17 +125,13 @@ async def test_get_appointments_by_client_and_master(db_session):
     repository = AppointmentRepository(db_session)
     master, client, service = await create_test_data(db_session)
 
-    first = await create_test_appointment(
-        repository, master.id, client.id, service.id
-    )
+    first = await create_test_appointment(repository, master.id, client.id, service.id)
     second = await create_test_appointment(
         repository,
         master.id,
         client.id,
         service.id,
-        starts_at=datetime(
-            2026, 8, 10, 12, 0, tzinfo=BANGKOK_TZ
-        ),
+        starts_at=datetime(2026, 8, 10, 12, 0, tzinfo=BANGKOK_TZ),
     )
 
     assert await repository.get_by_client_id(client.id) == [first, second]
@@ -149,9 +143,7 @@ async def test_get_appointments_by_master_and_period(db_session):
     repository = AppointmentRepository(db_session)
     master, client, service = await create_test_data(db_session)
 
-    appointment = await create_test_appointment(
-        repository, master.id, client.id, service.id
-    )
+    appointment = await create_test_appointment(repository, master.id, client.id, service.id)
 
     result = await repository.get_by_master_and_period(
         master.id,
@@ -167,9 +159,7 @@ async def test_get_overlapping_appointments(db_session):
     repository = AppointmentRepository(db_session)
     master, client, service = await create_test_data(db_session)
 
-    appointment = await create_test_appointment(
-        repository, master.id, client.id, service.id
-    )
+    appointment = await create_test_appointment(repository, master.id, client.id, service.id)
     await create_test_appointment(
         repository,
         master.id,
@@ -200,21 +190,15 @@ async def test_update_appointment(db_session):
     repository = AppointmentRepository(db_session)
     master, client, service = await create_test_data(db_session)
 
-    appointment = await create_test_appointment(
-        repository, master.id, client.id, service.id
-    )
+    appointment = await create_test_appointment(repository, master.id, client.id, service.id)
 
     updated = Appointment(
         id=appointment.id,
         client_id=client.id,
         master_id=master.id,
         service_id=service.id,
-        starts_at=datetime(
-            2026, 8, 10, 12, 0, tzinfo=BANGKOK_TZ
-        ),
-        ends_at=datetime(
-            2026, 8, 10, 13, 0, tzinfo=BANGKOK_TZ
-        ),
+        starts_at=datetime(2026, 8, 10, 12, 0, tzinfo=BANGKOK_TZ),
+        ends_at=datetime(2026, 8, 10, 13, 0, tzinfo=BANGKOK_TZ),
         status=AppointmentStatus.CONFIRMED,
         price_at_booking=1200,
     )
@@ -222,13 +206,16 @@ async def test_update_appointment(db_session):
     result = await repository.update(updated)
 
     assert result == updated
-    assert await repository.update(
-        Appointment(
-            id=uuid4(),
-            client_id=client.id,
-            master_id=master.id,
-            service_id=service.id,
-            starts_at=updated.starts_at,
-            ends_at=updated.ends_at,
+    assert (
+        await repository.update(
+            Appointment(
+                id=uuid4(),
+                client_id=client.id,
+                master_id=master.id,
+                service_id=service.id,
+                starts_at=updated.starts_at,
+                ends_at=updated.ends_at,
+            )
         )
-    ) is None
+        is None
+    )

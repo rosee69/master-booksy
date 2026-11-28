@@ -83,7 +83,6 @@ class ScheduleRepository(BaseRepository):
 
         return self._to_entity(schedule_model)
 
-    
     async def delete(self, schedule_id: UUID) -> bool:
         result = await self.session.execute(
             select(ScheduleModel).where(ScheduleModel.id == schedule_id)

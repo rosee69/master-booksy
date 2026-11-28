@@ -78,8 +78,7 @@ class AppointmentModel(Base):
     )
 
     price_at_booking: Mapped[int] = mapped_column(
-    Integer,
-    default=0,
-    nullable=False,
+        Integer,
+        default=0,
+        nullable=False,
     )
-    

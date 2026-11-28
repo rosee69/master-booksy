@@ -15,9 +15,7 @@ class MasterRepository(BaseRepository):
         super().__init__(session)
 
     async def get_by_id(self, master_id: UUID) -> Master | None:
-        result = await self.session.execute(
-            select(MasterModel).where(MasterModel.id == master_id)
-        )
+        result = await self.session.execute(select(MasterModel).where(MasterModel.id == master_id))
         master_model = result.scalar_one_or_none()
 
         if master_model is None:
